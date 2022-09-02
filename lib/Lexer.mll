@@ -1,14 +1,19 @@
 {
-  open Lexing 
+  (* open Lexing *)
   open Parser
 
-let advance_line lexbuf =
-  let pos = lexbuf.lex_curr_p in
-  let pos' = { pos with
-    pos_bol = lexbuf.lex_curr_pos;
-    pos_lnum = pos.pos_lnum + 1
-  } in
-  lexbuf.lex_curr_p <- pos'
+  let make_table num elems =
+    let table = Hashtbl.create num in
+    List.iter (fun (k, v) -> Hashtbl.add table k v) elems;
+    table
+
+  let keywords =
+    make_table 0 [
+      ("let", LET);
+      ("lam", LAM);
+      ("λ", LAM);
+      ("=", EQ);
+    ]
 }
 
 let digit = ['0'-'9']
@@ -37,6 +42,10 @@ let whitespace = [' ' '\t']+
 (* Rules *)
 
 rule token = parse
+  | "let" { LET }
+  | "λ" { LAM }
+  | "lam" { LAM }
+  | '=' { EQ }
   | int_constant { INT_CONSTANT (int_of_string (Lexing.lexeme lexbuf)) }
   | float_constant { FLOAT_CONSTANT (float_of_string (Lexing.lexeme lexbuf)) }
   | identifier { WORD (Lexing.lexeme lexbuf) }

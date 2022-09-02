@@ -6,6 +6,9 @@ open Ast
 %token <int> INT_CONSTANT
 %token <float> FLOAT_CONSTANT
 %token <string> WORD
+%token LET
+%token LAM
+%token EQ
 
 %type <Ast.program> program
 %start program
@@ -13,10 +16,13 @@ open Ast
 %%
 
 program:
-  | atom* EOF { Program $1 }
+  | top* EOF { Program $1 }
   ;
 
-atom:
+top:
+  | LET s=WORD EQ LAM e=expr { Let (s, e) }
+
+expr:
   | i=INT_CONSTANT { Int i }
   | f=FLOAT_CONSTANT { Float f }
   | s=WORD { Word s }
