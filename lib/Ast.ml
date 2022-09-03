@@ -2,8 +2,16 @@ exception TODO
 
 module Map = Hashtbl
 
-type typ = Int | Float | String
-type term = Int of int | Float of float | Word of string
+type typ = TyInt | TyFloat | TyString
+
+exception TypeMismatch of typ * typ
+
+type term =
+  | Int of int
+  | Float of float
+  | String of string
+  | Lambda of string * term
+
 type top = Let of string * typ * term
 type program = top list
 
@@ -31,12 +39,17 @@ and check_top : context -> top -> unit =
       Map.add ctx x ty
 
 and infer_ty : term -> typ =
- fun t -> match t with Int _ -> Int | Float _ -> Float | Word _ -> String
+ fun t ->
+  match t with
+  | Int _ -> TyInt
+  | Float _ -> TyFloat
+  | String _ -> TyString
+  | Lambda (_, _) -> raise TODO
 
 and equate_ty : typ -> typ -> unit =
  fun t1 t2 ->
   match (t1, t2) with
-  | Int, Int -> ()
-  | Float, Float -> ()
-  | String, String -> ()
-  | _ -> failwith "type mismatching"
+  | TyInt, TyInt -> ()
+  | TyFloat, TyFloat -> ()
+  | TyString, TyString -> ()
+  | _ -> raise (TypeMismatch (t1, t2))
