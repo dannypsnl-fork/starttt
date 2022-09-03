@@ -1,5 +1,7 @@
 %{
 open Ast
+open Term
+open Type
 %}
 
 %token EOF
@@ -13,7 +15,6 @@ open Ast
 %token EQ
 %token COLON
 %token COMMA
-%token QUOTE
 // type
 %token INT
 %token FLOAT
@@ -22,7 +23,7 @@ open Ast
 %type <Ast.program> program
 %start program
 
-%type <Ast.typ> typ
+%type <Type.typ> typ
 
 %%
 

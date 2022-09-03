@@ -1,2 +1,2 @@
 let a : Float = 1.2;
-let b : Int = "";
+let b : Int = 1;

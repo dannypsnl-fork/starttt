@@ -1,7 +1,7 @@
 open Lexing
 module L = Starttt.Lexer
 module P = Starttt.Parser
-module Ast = Starttt.Ast
+module C = Starttt.Check
 
 let rec parse' f source =
   let lexbuf = Lexing.from_channel source in
@@ -26,4 +26,4 @@ let () =
   (* parsing *)
   let program = parse_program in_chan in
   (* check type *)
-  Ast.check_all Ast.empty_context program
+  C.check_all C.empty_context program
