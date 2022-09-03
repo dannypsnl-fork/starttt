@@ -4,4 +4,4 @@
  (modules Parser))
 
 (library
- (name forth_parser))
+ (name starttt))

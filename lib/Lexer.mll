@@ -1,19 +1,6 @@
 {
   (* open Lexing *)
   open Parser
-
-  let make_table num elems =
-    let table = Hashtbl.create num in
-    List.iter (fun (k, v) -> Hashtbl.add table k v) elems;
-    table
-
-  let keywords =
-    make_table 0 [
-      ("let", LET);
-      ("lam", LAM);
-      ("λ", LAM);
-      ("=", EQ);
-    ]
 }
 
 let digit = ['0'-'9']
@@ -46,9 +33,12 @@ rule token = parse
   | "λ" { LAM }
   | "lam" { LAM }
   | '=' { EQ }
+  | "Int" { INT }
+  | "Float" { FLOAT }
+  | "String" { STRING }
   | int_constant { INT_CONSTANT (int_of_string (Lexing.lexeme lexbuf)) }
   | float_constant { FLOAT_CONSTANT (float_of_string (Lexing.lexeme lexbuf)) }
-  | identifier { WORD (Lexing.lexeme lexbuf) }
+  | identifier { STRING_LITERAL (Lexing.lexeme lexbuf) }
   (* etc. *)
   | whitespace { token lexbuf }
   | eof { EOF }
