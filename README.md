@@ -1,6 +1,6 @@
 # starttt
 
-> **WARNING**
+> **Warning**
 > 施工中
 
 我想試著解釋即便像(simply typed lambda calculus)這樣簡單的型別系統，要把它封裝成人類可以使用的系統的時候，還是非常複雜的事。
