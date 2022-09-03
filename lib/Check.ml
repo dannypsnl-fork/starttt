@@ -10,20 +10,14 @@ type context = (string, typ) Map.t
 
 let empty_context : context = Map.create 0
 
-let rec check_all : context -> program -> unit =
- fun ctx p ->
-  match p with
-  | t :: rest ->
-      check_top ctx t;
-      check_all ctx rest
-  | [] -> ()
-
-and check_top : context -> top -> unit =
+let rec check_top : context -> top -> unit =
  fun ctx tm ->
   match tm with
   | Let (x, ty, e) ->
       let ty' = infer_ty e in
       equate_ty ty ty';
+      print_string ("let " ^ x ^ ": checked");
+      print_newline ();
       Map.add ctx x ty
 
 and infer_ty : term -> typ =
@@ -41,3 +35,11 @@ and equate_ty : typ -> typ -> unit =
   | TyFloat, TyFloat -> ()
   | TyString, TyString -> ()
   | _ -> raise (TypeMismatch (t1, t2))
+
+let rec check_all : context -> program -> unit =
+ fun ctx p ->
+  match p with
+  | t :: rest ->
+      check_top ctx t;
+      check_all ctx rest
+  | [] -> ()

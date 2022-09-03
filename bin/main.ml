@@ -26,4 +26,6 @@ let () =
   (* parsing *)
   let program = parse_program in_chan in
   (* check type *)
-  C.check_all C.empty_context program
+  C.check_all C.empty_context program;
+  (* evaluate the program *)
+  ()
