@@ -36,12 +36,10 @@ rule token = parse
   | '=' { EQ }
   | ':' { COLON }
   | ';' { COMMA }
-  | "Int" { INT }
-  | "Float" { FLOAT }
-  | "String" { STRING }
-  | int_constant { INT_CONSTANT (int_of_string (Lexing.lexeme lexbuf)) }
-  | float_constant { FLOAT_CONSTANT (float_of_string (Lexing.lexeme lexbuf)) }
-  | string_literal { STRING_LITERAL (Lexing.lexeme lexbuf) }
+  (* type. *)
+  | "type{" identifier "}" { TYPE (Lexing.lexeme lexbuf) }
+  (* term. *)
+  | "const" { CONST }
   | identifier { IDENTIFIER (Lexing.lexeme lexbuf) }
   (* etc. *)
   | whitespace { token lexbuf }

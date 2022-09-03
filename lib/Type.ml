@@ -1,1 +1,1 @@
-type typ = TyInt | TyFloat | TyString
+type typ = Ty of string

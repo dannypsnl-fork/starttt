@@ -1,2 +1,2 @@
-let a : Float = 1.2;
-let b : Int = 1;
+let a : type{string} = const type{string};
+let b : type{int} = const type{int};

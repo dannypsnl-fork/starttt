@@ -5,10 +5,7 @@ open Type
 %}
 
 %token EOF
-%token <int> INT_CONSTANT
-%token <float> FLOAT_CONSTANT
 %token <string> IDENTIFIER
-%token <string> STRING_LITERAL
 // keyword or symbol
 %token LET
 %token LAM
@@ -16,9 +13,9 @@ open Type
 %token COLON
 %token COMMA
 // type
-%token INT
-%token FLOAT
-%token STRING
+%token <string> TYPE
+// term
+%token CONST
 
 %type <Ast.program> program
 %start program
@@ -37,13 +34,9 @@ top:
   ;
 
 typ:
-  | INT { TyInt }
-  | FLOAT { TyFloat }
-  | STRING { TyString }
+  | t=TYPE { Ty t }
 
 expr:
-  | i=INT_CONSTANT { Int i }
-  | f=FLOAT_CONSTANT { Float f }
-  | s=STRING_LITERAL { String s }
-  | LAM id=IDENTIFIER e=expr { Lambda (id, e) }
+  | CONST t=typ { Const t }
+  | LAM id=IDENTIFIER t=typ e=expr { Lambda (id, t, e) }
   ;

@@ -1,5 +1,6 @@
+open Type
+
 type term =
-  | Int of int
-  | Float of float
-  | String of string
-  | Lambda of string * term
+  (* constant of a type *)
+  | Const of typ
+  | Lambda of string * typ * term

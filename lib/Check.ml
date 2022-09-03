@@ -16,25 +16,23 @@ let rec check_top : context -> top -> unit =
   | Let (x, ty, e) ->
       let ty' = infer_ty e in
       equate_ty ty ty';
-      print_string ("let " ^ x ^ ": checked");
+      print_string ("[ok] let " ^ x ^ ": checked");
       print_newline ();
       Map.add ctx x ty
 
 and infer_ty : term -> typ =
  fun t ->
   match t with
-  | Int _ -> TyInt
-  | Float _ -> TyFloat
-  | String _ -> TyString
-  | Lambda (_, _) -> raise TODO
+  (* test *)
+  | Const t' -> t'
+  (* complex case *)
+  | Lambda (_, _, _) -> raise TODO
 
 and equate_ty : typ -> typ -> unit =
  fun t1 t2 ->
   match (t1, t2) with
-  | TyInt, TyInt -> ()
-  | TyFloat, TyFloat -> ()
-  | TyString, TyString -> ()
-  | _ -> raise (TypeMismatch (t1, t2))
+  | Ty s1, Ty s2 ->
+      if not (String.equal s1 s2) then raise (TypeMismatch (t1, t2))
 
 let rec check_all : context -> program -> unit =
  fun ctx p ->
