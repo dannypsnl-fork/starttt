@@ -1,4 +1,5 @@
 let a : @{string} = #{string};
 let b : @{int} = #{int};
 let c : @{int -> int} = #{int -> int};
+// identity function
 let d : @{int -> int} = λ x.x;

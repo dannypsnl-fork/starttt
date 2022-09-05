@@ -1,5 +1,13 @@
 {
+  open Lexing
   open Parser
+
+  let next_line lexbuf =
+  let pos = lexbuf.lex_curr_p in
+  lexbuf.lex_curr_p <-
+    { pos with pos_bol = lexbuf.lex_curr_pos;
+               pos_lnum = pos.pos_lnum + 1
+    }
 }
 
 let digit = ['0'-'9']
@@ -46,7 +54,12 @@ rule token = parse
   | '#' { CONST_MARK }
   | identifier { IDENTIFIER (Lexing.lexeme lexbuf) }
   (* etc. *)
+  | "//" { single_line_comment lexbuf }
   | whitespace { token lexbuf }
-  | newline  { token lexbuf }
+  | newline  { next_line lexbuf; token lexbuf }
   | eof { EOF }
   | _ { raise (Failure ("Character not allowed in source text: '" ^ Lexing.lexeme lexbuf ^ "'")) }
+and single_line_comment = parse
+  | newline { next_line lexbuf; token lexbuf }
+  | eof { EOF }
+  | _ { single_line_comment lexbuf }
