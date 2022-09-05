@@ -4,7 +4,16 @@ open Ast
 module Map = Hashtbl
 
 (* TODO: conversion check
-   This module should return a really to run code! *)
+   This module should return a really to run code!
+
+   conversion of module:
+   1. rearrange the definitions
+      extracts the definition with non-mono type(here, only arrow type) to the front of the program and binds them with their type
+   2. check term of definition with mono type
+   3. check term of definition with non-mono type now, because all type bindings are ready now for mutual access
+
+   when converting a module, remember no redefined allowed here
+*)
 
 (* global context bounds
    ---------------------
