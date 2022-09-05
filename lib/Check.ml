@@ -3,6 +3,8 @@ open Type
 open Ast
 module Map = Hashtbl
 
+exception TyUnequal
+
 (* global context bounds
    ---------------------
       string => type *)
@@ -33,6 +35,10 @@ and equate_ty : typ -> typ -> unit =
   match (t1, t2) with
   | Ty s1, Ty s2 ->
       if not (String.equal s1 s2) then raise (TypeMismatch (t1, t2))
+  | Arrow (a1, r1), Arrow (a2, r2) ->
+      equate_ty a1 a2;
+      equate_ty r1 r2
+  | _ -> raise TyUnequal
 
 let rec check_all : context -> program -> unit =
  fun ctx p ->

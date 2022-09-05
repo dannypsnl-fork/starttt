@@ -36,8 +36,11 @@ rule token = parse
   | '=' { EQ }
   | ':' { COLON }
   | ';' { COMMA }
+  | '{' { L_BRACE }
+  | '}' { R_BRACE }
   (* type. *)
   | '@' { TYPE_MARK }
+  | "->" { ARROW }
   | '#' { CONST_MARK }
   (* term. *)
   | identifier { IDENTIFIER (Lexing.lexeme lexbuf) }

@@ -1,2 +1,3 @@
-let a : @string = #string;
-let b : @int = #int;
+let a : @{string} = #{string};
+let b : @{int} = #{int};
+let c : @{int -> int} = #{int -> int};

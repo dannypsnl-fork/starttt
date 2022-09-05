@@ -12,8 +12,11 @@ open Type
 %token EQ
 %token COLON
 %token COMMA
+%token L_BRACE
+%token R_BRACE
 // type
-%token TYPE_MARK 
+%token TYPE_MARK
+%token ARROW
 // term
 %token CONST_MARK
 
@@ -33,11 +36,12 @@ top:
     { Let (s, ty, e) }
   ;
 
-marked_typ: TYPE_MARK t=typ { t }
+marked_typ: TYPE_MARK L_BRACE t=typ R_BRACE { t }
 typ:
   | t=IDENTIFIER { Ty t }
+  | t1=typ ARROW t2=typ { Arrow (t1, t2) }
 
 expr:
-  | CONST_MARK t=typ { Const t }
+  | CONST_MARK L_BRACE t=typ R_BRACE { Const t }
   | LAM id=IDENTIFIER t=typ e=expr { Lambda (id, t, e) }
   ;
