@@ -1,3 +1,4 @@
 let a : @{string} = #{string};
 let b : @{int} = #{int};
 let c : @{int -> int} = #{int -> int};
+let d : @{int -> int} = λ x.x;

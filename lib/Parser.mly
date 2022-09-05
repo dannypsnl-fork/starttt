@@ -9,6 +9,7 @@ open Type
 // keyword or symbol
 %token LET
 %token LAM
+%token DOT
 %token EQ
 %token COLON
 %token COMMA
@@ -43,5 +44,6 @@ typ:
 
 expr:
   | CONST_MARK L_BRACE t=typ R_BRACE { Const t }
-  | LAM id=IDENTIFIER t=typ e=expr { Lambda (id, t, e) }
+  | LAM id=IDENTIFIER DOT e=expr { Lambda (id, e) }
+  | v=IDENTIFIER { Var v }
   ;

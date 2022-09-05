@@ -2,6 +2,8 @@ open Lexing
 module L = Starttt.Lexer
 module P = Starttt.Parser
 module C = Starttt.Check
+module Ty = Starttt.Type
+module Ast = Starttt.Ast
 
 let rec parse' f source =
   let lexbuf = Lexing.from_channel source in
@@ -18,6 +20,13 @@ and column pos = pos.pos_cnum - pos.pos_bol - 1
 let parse_program source = parse' P.program source
 
 let () =
+  Printexc.register_printer (function
+    | Ast.TypeMismatch (t1, t2) ->
+        Some
+          (Printf.sprintf "`%s` not equals to `%s`" (Ty.type_to_str t1)
+             (Ty.type_to_str t2))
+    | _ -> None);
+
   print_string "starttt";
   print_newline ();
   let file_name = Array.get Sys.argv 1 in

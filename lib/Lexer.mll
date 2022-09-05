@@ -33,6 +33,7 @@ rule token = parse
   | "let" { LET }
   | "λ" { LAM }
   | "lam" { LAM }
+  | '.' { DOT }
   | '=' { EQ }
   | ':' { COLON }
   | ';' { COMMA }
@@ -41,8 +42,8 @@ rule token = parse
   (* type. *)
   | '@' { TYPE_MARK }
   | "->" { ARROW }
-  | '#' { CONST_MARK }
   (* term. *)
+  | '#' { CONST_MARK }
   | identifier { IDENTIFIER (Lexing.lexeme lexbuf) }
   (* etc. *)
   | whitespace { token lexbuf }
