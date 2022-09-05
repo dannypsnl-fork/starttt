@@ -1,2 +1,2 @@
-let a : type{string} = const type{string};
-let b : type{int} = const type{int};
+let a : @string = #string;
+let b : @int = #int;

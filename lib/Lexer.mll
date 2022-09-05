@@ -37,9 +37,9 @@ rule token = parse
   | ':' { COLON }
   | ';' { COMMA }
   (* type. *)
-  | "type{" identifier "}" { TYPE (Lexing.lexeme lexbuf) }
+  | '@' { TYPE_MARK }
+  | '#' { CONST_MARK }
   (* term. *)
-  | "const" { CONST }
   | identifier { IDENTIFIER (Lexing.lexeme lexbuf) }
   (* etc. *)
   | whitespace { token lexbuf }

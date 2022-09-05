@@ -13,9 +13,9 @@ open Type
 %token COLON
 %token COMMA
 // type
-%token <string> TYPE
+%token TYPE_MARK 
 // term
-%token CONST
+%token CONST_MARK
 
 %type <Ast.program> program
 %start program
@@ -29,14 +29,15 @@ program:
   ;
 
 top:
-  | LET s=IDENTIFIER COLON ty=typ EQ e=expr COMMA
+  | LET s=IDENTIFIER COLON ty=marked_typ EQ e=expr COMMA
     { Let (s, ty, e) }
   ;
 
+marked_typ: TYPE_MARK t=typ { t }
 typ:
-  | t=TYPE { Ty t }
+  | t=IDENTIFIER { Ty t }
 
 expr:
-  | CONST t=typ { Const t }
+  | CONST_MARK t=typ { Const t }
   | LAM id=IDENTIFIER t=typ e=expr { Lambda (id, t, e) }
   ;
