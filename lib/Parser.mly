@@ -13,6 +13,8 @@ open Type
 %token EQ
 %token COLON
 %token COMMA
+%token L_PAREN
+%token R_PAREN
 %token L_BRACE
 %token R_BRACE
 // type
@@ -44,6 +46,7 @@ typ:
 
 expr:
   | CONST_MARK L_BRACE t=typ R_BRACE { Const t }
+  | L_PAREN f=expr arg=expr R_PAREN { App (f, arg) }
   | LAM id=IDENTIFIER DOT e=expr { Lambda (id, e) }
   | v=IDENTIFIER { Var v }
   ;

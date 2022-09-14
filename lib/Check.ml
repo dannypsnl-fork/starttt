@@ -49,6 +49,13 @@ and infer_ty : context -> term -> typ =
       Map.add ctx x dummy;
       Arrow (dummy, infer_ty ctx tm)
   | Var x -> Map.find ctx x
+  | App (f, arg) -> (
+      let ft = infer_ty ctx f in
+      match ft with
+      | Arrow (argt, rett) ->
+          check_tm ctx arg argt;
+          rett
+      | _ -> failwith "not a function")
 
 and equate_ty : typ -> typ -> unit =
  fun t1 t2 ->

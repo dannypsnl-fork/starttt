@@ -7,3 +7,4 @@ type term =
   | Var of string
   (* λ x . M *)
   | Lambda of string * term
+  | App of term * term

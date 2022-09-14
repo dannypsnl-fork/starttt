@@ -45,6 +45,8 @@ rule token = parse
   | '=' { EQ }
   | ':' { COLON }
   | ';' { COMMA }
+  | '(' { L_PAREN }
+  | ')' { R_PAREN }
   | '{' { L_BRACE }
   | '}' { R_BRACE }
   (* type. *)
