@@ -5,4 +5,5 @@ let c : @{int -> int} = #{int -> int};
 let d : @{int -> int} = λ x.x;
 let e : @{int} = (c b);
 let f : @{int} = (g (d b));
-let g : @{int -> int} = #{int -> int};
+let g : @{int -> int} = (h #{int});
+let h : @{int -> int -> int} = #{int -> int -> int};
