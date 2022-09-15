@@ -17,6 +17,7 @@ open Type
 %token R_PAREN
 %token L_BRACE
 %token R_BRACE
+%token RUN
 // type
 %token TYPE_MARK
 %token ARROW
@@ -37,6 +38,7 @@ program:
 top:
   | LET s=IDENTIFIER COLON ty=marked_typ EQ e=expr COMMA
     { Let (s, ty, e) }
+  | RUN e=expr COMMA { Run e }
   ;
 
 marked_typ: TYPE_MARK L_BRACE t=typ R_BRACE { t }

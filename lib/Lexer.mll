@@ -38,6 +38,7 @@ let newline = '\r' | '\n' | "\r\n"
 (* Rules *)
 
 rule token = parse
+  | "run" { RUN }
   | "let" { LET }
   | "λ" { LAM }
   | "lam" { LAM }

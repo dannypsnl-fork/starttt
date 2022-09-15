@@ -20,6 +20,10 @@ let isMono : context -> top -> bool =
       Map.add ctx x ty;
       false
   | Let (_, _, _) -> true
+  | Run _ -> true
+
+let isBind : top -> bool =
+ fun t -> match t with Let (_, _, _) -> true | Run _ -> false
 
 let conversion : program -> program =
  fun p ->
@@ -27,4 +31,6 @@ let conversion : program -> program =
   let monos, non_monos = List.partition (isMono init_ctx) p in
   check_all init_ctx non_monos;
   check_all init_ctx monos;
-  List.append non_monos monos
+  let new_prog = List.append non_monos monos in
+  let binds, non_binds = List.partition isBind new_prog in
+  List.append binds non_binds

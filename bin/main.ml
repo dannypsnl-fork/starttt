@@ -2,6 +2,7 @@ open Lexing
 module L = Starttt.Lexer
 module P = Starttt.Parser
 module C = Starttt.Conversion
+module E = Starttt.Eval
 module Ty = Starttt.Type
 module Ast = Starttt.Ast
 
@@ -35,6 +36,6 @@ let () =
   (* parsing *)
   let program = parse_program in_chan in
   (* check type *)
-  let _ = C.conversion program in
+  let c_program = C.conversion program in
   (* evaluate the program *)
-  ()
+  E.eval_program c_program

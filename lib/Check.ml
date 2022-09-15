@@ -18,6 +18,8 @@ let rec check_top : context -> top -> unit =
       print_string ("[ok] let " ^ x ^ ": checked");
       print_newline ();
       Map.add ctx x ty
+  (* run didn't need any check *)
+  | Run _ -> ()
 
 (* check term has type *)
 and check_tm : context -> term -> typ -> unit =

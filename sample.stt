@@ -7,3 +7,7 @@ let e : @{int} = (c b);
 let f : @{int} = (g (d b));
 let g : @{int -> int} = (h #{int});
 let h : @{int -> int -> int} = #{int -> int -> int};
+
+run a;
+run (d a);
+run c;
