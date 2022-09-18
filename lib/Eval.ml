@@ -15,7 +15,7 @@ type value =
 let rec value_to_str : value -> string =
  fun v ->
   match v with
-  | Const ty -> "#" ^ type_to_str ty
+  | Const ty -> "#{" ^ type_to_str ty ^ "}"
   | Var x -> x
   | Lambda (x, v) -> "lam " ^ x ^ " . " ^ value_to_str v
   | App (v1, v2) -> value_to_str v1 ^ " " ^ value_to_str v2

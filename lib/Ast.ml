@@ -1,5 +1,3 @@
-exception TODO
-
 open Term
 open Type
 
